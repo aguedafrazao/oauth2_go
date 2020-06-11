@@ -10,17 +10,17 @@ import (
     "golang.org/x/oauth2/google"
 )
 
-var {
+var (
     googleOauthConfig = &oauth.Config{
         RedirectURL: "http://localhost:8080/callback",
         ClientId: os.Getenv("GOOGLE_CLIENT_ID"),
         ClientSecret: os.Getenv("GOOGLE_CLIENT_SECRET"),
         Scopes: []string{"https://www.googleapis.com/auth/user.info.email"},
         Endpoint: google.Endpoint,
-    }
+        )
     // TODO: randomize it
     randonState = "random"
-}
+
 
 
 func main(){
