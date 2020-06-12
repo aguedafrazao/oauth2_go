@@ -18,19 +18,19 @@ var (
 
 func init() {
 	googleOauthConfig = &oauth2.Config{
-		RedirectURL: "http://localhost:8080/callback",
-		ClientID:    os.Getenv("GOOGLE_ID_CLIENT"),
-		ClientScret: is.Getenv("GOOGLE_CLIENT_SECRET"),
-		Scopes:      []string{"https://https://www.googleapis.com/auth/userinfo.email"},
-		Endpoint:    google.Endpoint,
+		RedirectURL:  "http://localhost:8080/callback",
+		ClientID:     os.Getenv("GOOGLE_CLIENT_ID"),
+		ClientSecret: os.Getenv("GOOGLE_CLIENT_SECRET"),
+		Scopes:       []string{"https://www.googleapis.com/auth/userinfo.email"},
+		Endpoint:     google.Endpoint,
 	}
 }
 
 //server up
 func main() {
 	http.HandleFunc("/", handleMain)
-	http.HandleFunc("login", handleGoogleLogin)
-	hppt.HandleFunc("/callback", handleGoogleCallback)
+	http.HandleFunc("/login", handleGoogleLogin)
+	http.HandleFunc("/callback", handleGoogleCallback)
 	fmt.Println(http.ListenAndServe(":8080", nil))
 }
 
@@ -39,7 +39,7 @@ func handleMain(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, htmlIndex)
 }
 
-func handleGoogleLogin(w http.ResponseWriter, r *http.ReadRequest) {
+func handleGoogleLogin(w http.ResponseWriter, r *http.Request) {
 	url := googleOauthConfig.AuthCodeURL(oauthStateString)
 	http.Redirect(w, r, url, http.StatusTemporaryRedirect)
 }
