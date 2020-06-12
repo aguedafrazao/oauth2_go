@@ -33,17 +33,17 @@ func main() {
 	http.HandleFunc("/callback", handleGoogleCallback)
 	fmt.Println(http.ListenAndServe(":8080", nil))
 }
-
+//html page
 func handleMain(w http.ResponseWriter, r *http.Request) {
 	var htmlIndex = `<html><body><a href="/login">Google Log In></body></html>`
 	fmt.Fprintf(w, htmlIndex)
 }
-
+//login
 func handleGoogleLogin(w http.ResponseWriter, r *http.Request) {
 	url := googleOauthConfig.AuthCodeURL(oauthStateString)
 	http.Redirect(w, r, url, http.StatusTemporaryRedirect)
 }
-
+//callback
 func handleGoogleCallback(w http.ResponseWriter, r *http.Request) {
 	content, err := getUserInfo(r.FormValue("state"), r.FormValue("code"))
 	if err != nil {
@@ -53,7 +53,7 @@ func handleGoogleCallback(w http.ResponseWriter, r *http.Request) {
 	}
 	fmt.Fprintf(w, "Content: %s\n", content)
 }
-
+//get userInfo
 func getUserInfo(state string, code string) ([]byte, error) {
 	if state != oauthStateString {
 		return nil, fmt.Errorf("invalid oauth state")
